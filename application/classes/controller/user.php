@@ -85,5 +85,104 @@ class Controller_User extends Controller_Template {
         // Redirect to login page
         Request::current()->redirect('user/login');
     }
+	
+	public function action_test()
+	{
+        $this->template->content = View::factory('user/info')
+            ->bind('user', $user);
+         
+        // Load the user information
+        $user = Auth::instance()->get_user();
+		
+		$event = ORM::factory('event');
+		$event->phone = "089";
+		$event->location = ORM::factory('location', 4);
+		$event->company = ORM::factory('company', 2);
+		$event->save();
+		
+		// if a user is not logged in, redirect to login page
+        if (!$user)
+        {
+            Request::current()->redirect('user/login');
+        }
+	}
+	
+	public function snippet()
+	{
+		// Create an timebank and attach it to the user (one-to-many)
+		$timebank = ORM::factory('user_timebank')->values(array(
+			'approve'       => 5,
+			'status'  		=> 22,
+			'user_id'		=> $user->id, // sets the fk
+		));
+		$timebank->save();
+		
+		///////////////
+		
+		// Create skill
+		$skill = ORM::factory('skill');
+		$skill->name = "programmer";
+		$skill->description = "programmer description";
+		$skill->save();
+		
+		// Attach skill to user (many-to-many)
+		$user->add('skills', ORM::factory('skill', array('name' => 'programmer')));
+
+		///////////////
+
+		// Create occupation
+		$occupation = ORM::factory('occupation');
+		$occupation->name = "developer";
+		$occupation->description = "developer description";
+		$occupation->save();
+		
+		// Attach occupation to user (many-to-many)
+		$user->add('occupations', ORM::factory('occupation', array('name' => 'developer')));
+		
+		///////////////
+
+		// Create location
+		$location = ORM::factory('location');
+		$location->name = "laksi";
+		$location->description = "laksi description";
+		$location->save();
+		
+		// Attach location to user (many-to-many)
+		$user->add('locations', ORM::factory('location', array('name' => 'laksi')));
+		
+		///////////////
+
+		// Create activity
+		$activity = ORM::factory('activity');
+		$activity->name = "pack sand";
+		$activity->description = "pack description";
+		$activity->save();
+		
+		// Attach activity to user (many-to-many)
+		$user->add('activities', ORM::factory('activity', array('name' => 'pack sand')));
+		
+		///////////////
+
+		// Create company
+		$company_type = ORM::factory('company_type');
+		$company_type->name = 'private sector';
+		$company_type->save();
+		
+		$company = ORM::factory('company');
+		$company->user = $user;
+		$company->objective = "objobj";
+		$company->company_type = $company_type;
+		$company->save();
+		
+		///////////////
+
+		// Create event
+		$event = ORM::factory('event');
+		$event->phone = "089";
+		$event->location = ORM::factory('location', 4);
+		$event->company = ORM::factory('company', 2);
+		$event->save();
+		
+	}
  
 }
