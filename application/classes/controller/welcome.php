@@ -6,5 +6,6 @@ class Controller_Welcome extends Controller {
 	{
 		$this->response->body('hello, wosdfrld!');
 	}
+	
 
 } // End Welcome

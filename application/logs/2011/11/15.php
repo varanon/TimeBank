@@ -91,3 +91,15 @@
 #7 C:\AppServ\www\TimeBank\system\classes\kohana\request.php(1138): Kohana_Request_Client->execute(Object(Request))
 #8 C:\AppServ\www\TimeBank\index.php(109): Kohana_Request->execute()
 #9 {main}
+2011-11-15 22:34:25 --- ERROR: View_Exception [ 0 ]: The requested view user/company could not be found ~ SYSPATH\classes\kohana\view.php [ 252 ]
+2011-11-15 22:34:25 --- STRACE: View_Exception [ 0 ]: The requested view user/company could not be found ~ SYSPATH\classes\kohana\view.php [ 252 ]
+--
+#0 C:\AppServ\www\TimeBank\system\classes\kohana\view.php(137): Kohana_View->set_filename('user/company')
+#1 C:\AppServ\www\TimeBank\system\classes\kohana\view.php(30): Kohana_View->__construct('user/company', NULL)
+#2 C:\AppServ\www\TimeBank\application\classes\controller\user.php(110): Kohana_View::factory('user/company')
+#3 [internal function]: Controller_User->action_company()
+#4 C:\AppServ\www\TimeBank\system\classes\kohana\request\client\internal.php(118): ReflectionMethod->invoke(Object(Controller_User))
+#5 C:\AppServ\www\TimeBank\system\classes\kohana\request\client.php(64): Kohana_Request_Client_Internal->execute_request(Object(Request))
+#6 C:\AppServ\www\TimeBank\system\classes\kohana\request.php(1138): Kohana_Request_Client->execute(Object(Request))
+#7 C:\AppServ\www\TimeBank\index.php(109): Kohana_Request->execute()
+#8 {main}

@@ -86,6 +86,10 @@ class Controller_User extends Controller_Template {
         Request::current()->redirect('user/login');
     }
 	
+	
+	///////////////////////////////////////////
+	// Below is test/snippet function only
+	
 	public function action_test()
 	{
         $this->template->content = View::factory('user/info')
@@ -94,17 +98,47 @@ class Controller_User extends Controller_Template {
         // Load the user information
         $user = Auth::instance()->get_user();
 		
-		$event = ORM::factory('event');
-		$event->phone = "089";
-		$event->location = ORM::factory('location', 4);
-		$event->company = ORM::factory('company', 2);
-		$event->save();
-		
 		// if a user is not logged in, redirect to login page
         if (!$user)
         {
             Request::current()->redirect('user/login');
         }
+	}
+	
+	public function action_company()
+	{
+        $this->template->content = View::factory('user/info')
+            ->bind('user', $user);
+         
+        // Load the user information
+        $user = Auth::instance()->get_user();
+		
+		$company = ORM::factory('company');
+		$company->user = $user;
+		$company->objective = "new company";
+		$company->company_type = ORM::factory('company_type', 1);
+		$company->name = "new company";
+		$company->address = "new company";
+		$company->detail = "new company";
+		$company->email = "a@a.com";
+		//$company->website = "http://zanroo.com";
+
+		try
+        {
+            $company->save();
+            echo 'success';
+        }
+        catch (ORM_Validation_Exception $e)
+        {
+            $errors = $e->errors('models');
+			print_r($errors);
+        }
+		
+		// if a user is not logged in, redirect to login page
+        if (!$user)
+        {
+            Request::current()->redirect('user/login');
+        }		
 	}
 	
 	public function snippet()
