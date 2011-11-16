@@ -7,4 +7,15 @@ class Model_Location extends ORM {
 		'events'       => array('model' => 'event'),
 	);
 	
+    public function rules()
+    {
+        return array(
+            'name' => array(
+                array('not_empty'),
+            ),
+            'description' => array(
+                array('not_empty'),
+            ),
+        );
+    }
 } // End User Model

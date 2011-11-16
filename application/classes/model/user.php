@@ -15,5 +15,4 @@ class Model_User extends Model_Auth_User {
 	protected $_has_one = array(
 		'company' => array('model' => 'company'),
 	);
-	
 } // End User Model

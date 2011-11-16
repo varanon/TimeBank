@@ -21,12 +21,13 @@ class Model_Company extends ORM {
         return array(
             'user_id' => array(
                 array('not_empty'),
+                array('max_length', array(':value', 11)),
             ),
             'company_type_id' => array(
                 array('not_empty'),
+                array('max_length', array(':value', 11)),
             ),
             'email' => array(
-                array('not_empty'),
                 array('email'),
             ),
             'name' => array(
@@ -34,19 +35,10 @@ class Model_Company extends ORM {
             ),
             'objective' => array(
                 array('not_empty'),
-            ),
-            'detail' => array(
-                array('not_empty'),
-            ),
-            'address' => array(
-                array('not_empty'),
-            ),
-            'website' => array(
-				array('not_empty'),
-				array('url'),
+				array('min_length', array(':value', 50)),
             ),
             'logo' => array(
-				array(array($this, 'check_upload'), array('logo', ':value')),
+                array(array($this, 'check_upload'), array('logo', ':value')),
             ),
         );
     }

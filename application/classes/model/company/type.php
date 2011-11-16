@@ -12,4 +12,15 @@ class Model_Company_Type extends ORM {
 		'company' => array('model' => 'company'),
 	);
 
+public function rules()
+    {
+        return array(
+            'name' => array(
+                array('not_empty'),
+            ),
+            'description' => array(
+                array('not_empty'),
+            ),
+        );
+    }
 } // End User Timebank Model

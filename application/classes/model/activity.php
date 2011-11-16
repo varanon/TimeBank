@@ -6,4 +6,16 @@ class Model_Activity extends ORM {
 		'users'       => array('model' => 'user', 'through' => 'users_activities'),
 	);
 	
+    public function rules()
+    {
+        return array(
+            'name' => array(
+                array('not_empty'),
+                array('max_length', array(':value', 11)),
+            ),
+            'description' => array(
+                array('not_empty'),
+            ),
+        );
+    }
 } // End User Model
