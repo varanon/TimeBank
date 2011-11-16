@@ -5,7 +5,7 @@
     </h3>
 <? endif; ?>
  
-<?= Form::open('user/company'); ?>
+<?= Form::open('user/company', array('enctype' => 'multipart/form-data')); ?>
  
 <?= Form::label('name', 'name'); ?>
 <?= Form::input('name', HTML::chars(Arr::get($_POST, 'name'))); ?>
@@ -41,6 +41,12 @@
 <?= Form::input('website', HTML::chars(Arr::get($_POST, 'website'))); ?>
 <div class="error">
     <?= Arr::get($errors, 'website'); ?>
+</div>
+
+<?= Form::label('logo', 'Company logo'); ?>
+<?= Form::file('logo') ?>
+<div class="error">
+    <?= Arr::get($errors, 'logo'); ?>
 </div>
 
 <?= Form::submit('create', 'Create company'); ?>

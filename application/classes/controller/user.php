@@ -128,7 +128,12 @@ class Controller_User extends Controller_Template {
 			
 			$company->user = $user;
 			$company->company_type = ORM::factory('company_type', 1);
-
+			
+			if(isset($_FILES['logo']['name']) && $_FILES['logo']['name'] != '')
+			{
+				$company->logo = 'logo';
+			}
+			
 			try
 			{
 				$company->save();
@@ -139,7 +144,7 @@ class Controller_User extends Controller_Template {
             } catch (ORM_Validation_Exception $e) {
                  
                 // Set failure message
-                $message = 'There were errors, please see form below.';
+                $message = __('There were errors, please see form below.');
                  
                 // Set errors using custom messages
                 $errors = $e->errors('models');
