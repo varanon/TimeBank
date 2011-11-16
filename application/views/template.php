@@ -7,7 +7,7 @@
 <meta name="author" content="JDStraughan" /> 
 <meta name="copyright" content="Copyright 2011. JDStraughan.com" />
 <meta name="language" content="en-us" /> 
-<title>Auth with ORM tutorial for Kohana 3.1</title> 
+<title>TimeBank test</title> 
 <style type="text/css">
 .error {
     color: red;
@@ -19,7 +19,7 @@
 </style>
 </head> 
 <body>
-    <h1>Auth module using the ORM driver for Kohana 3.1</h1>
+    <h1>TimeBank test</h1>
     <div id="content">
         <?= $content; ?>
     </div>

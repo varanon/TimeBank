@@ -81,6 +81,7 @@ if (isset($_SERVER['KOHANA_ENV']))
  */
 Kohana::init(array(
 	'base_url'   => '/TimeBank',
+	'index_file' => FALSE
 ));
 
 /**
