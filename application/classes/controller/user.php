@@ -4,19 +4,16 @@ class Controller_User extends Controller_Template {
  
     public function action_index()
     {
-        $this->template->content = View::factory('user/info')
-            ->bind('user', $user);
-         
-        // Load the user information
-        $user = Auth::instance()->get_user();
+        $this->template->content = View::factory('user/index');
          
         // if a user is not logged in, redirect to login page
-        if (!$user)
+        if (!$this->user)
         {
             Request::current()->redirect('user/login');
+			return;
         }
     }
- 
+	
     public function action_create() 
     {
         $this->template->content = View::factory('user/create')
@@ -31,7 +28,7 @@ class Controller_User extends Controller_Template {
                 $user = ORM::factory('user')->create_user($this->request->post(), array(
                     'username',
                     'password',
-                    'email'            
+					'email',
                 ));
                  
                 // Grant user login role
@@ -76,14 +73,14 @@ class Controller_User extends Controller_Template {
             }
         }
     }
-     
+    
     public function action_logout() 
     {
         // Log user out
         Auth::instance()->logout();
          
-        // Redirect to login page
-        Request::current()->redirect('user/login');
+        // Redirect to main page
+        Request::current()->redirect('/');
     }
 	
 	
@@ -92,8 +89,7 @@ class Controller_User extends Controller_Template {
 	
 	public function action_test()
 	{
-        $this->template->content = View::factory('user/info')
-            ->bind('user', $user);
+        $this->template->content = View::factory('user/index');
          
         // Load the user information
         $user = Auth::instance()->get_user();
@@ -103,54 +99,6 @@ class Controller_User extends Controller_Template {
         {
             Request::current()->redirect('user/login');
         }
-	}
-	
-	public function action_company()
-	{
-        $this->template->content = View::factory('company')
-            ->bind('user', $user)
-            ->bind('message', $message)
-			->bind('errors', $errors);
-         
-        // Load the user information
-        $user = Auth::instance()->get_user();
-		
-		// if a user is not logged in, redirect to login page
-        if (!$user)
-        {
-            Request::current()->redirect('user/login');
-        }	
-		
-		if (HTTP_Request::POST == $this->request->method()) 
-		{
-			$company = ORM::factory('company')
-            		->values($_POST, array('name', 'objective', 'address', 'detail', 'email', 'website'));
-			
-			$company->user = $user;
-			$company->company_type = ORM::factory('company_type', 1);
-			
-			if(isset($_FILES['logo']['name']) && $_FILES['logo']['name'] != '')
-			{
-				$company->logo = 'logo';
-			}
-			
-			try
-			{
-				$company->save();
-				
-				$this->template->content = View::factory('companyadd')
-					->bind('company', $company);
-                 
-            } catch (ORM_Validation_Exception $e) {
-                 
-                // Set failure message
-                $message = __('There were errors, please see form below.');
-                 
-                // Set errors using custom messages
-                $errors = $e->errors('models');
-            }
-		}
-	
 	}
 	
 	public function snippet()

@@ -103,3 +103,8 @@
 #6 C:\AppServ\www\TimeBank\system\classes\kohana\request.php(1138): Kohana_Request_Client->execute(Object(Request))
 #7 C:\AppServ\www\TimeBank\index.php(109): Kohana_Request->execute()
 #8 {main}
+2011-11-15 23:52:03 --- ERROR: ErrorException [ 1 ]: Call to a member function pk() on a non-object ~ MODPATH\orm\classes\kohana\orm.php [ 675 ]
+2011-11-15 23:52:03 --- STRACE: ErrorException [ 1 ]: Call to a member function pk() on a non-object ~ MODPATH\orm\classes\kohana\orm.php [ 675 ]
+--
+#0 [internal function]: Kohana_Core::shutdown_handler('user', false)
+#1 {main}

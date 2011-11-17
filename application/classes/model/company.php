@@ -27,9 +27,6 @@ class Model_Company extends ORM {
                 array('not_empty'),
                 array('max_length', array(':value', 11)),
             ),
-            'email' => array(
-                array('email'),
-            ),
             'name' => array(
                 array('not_empty'),
             ),

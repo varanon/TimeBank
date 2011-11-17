@@ -117,3 +117,5 @@ Route::set('default', '(<controller>(/<action>(/<id>)))')
 		'controller' => 'welcome',
 		'action'     => 'index',
 	));
+
+Cookie::$salt = 'your secret is safe with me';

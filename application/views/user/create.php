@@ -1,4 +1,4 @@
-<h2>Create a New User</h2>
+<h2>Create volunteer account</h2>
 <? if ($message) : ?>
     <h3 class="message">
         <?= $message; ?>

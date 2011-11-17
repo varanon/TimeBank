@@ -1,1 +1,0 @@
-You've added company <?= $company->name; ?> to the database

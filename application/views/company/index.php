@@ -1,0 +1,1 @@
+<?= HTML::anchor('event/create', 'Create event'); ?>

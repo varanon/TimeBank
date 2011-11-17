@@ -15,6 +15,10 @@ class Model_Event extends ORM {
 	public function rules()
     {
         return array(
+            'name' => array(
+                array('not_empty'),
+                array('min_length', array(':value', 3)),
+            ),
             'open_date' => array(
                 array('not_empty'),
                 array('date'),
@@ -36,6 +40,7 @@ class Model_Event extends ORM {
             ),
             'phone' => array(
                 array('not_empty'),
+				array('numeric'),
             ),
             'contractor_name' => array(
                 array('not_empty'),
