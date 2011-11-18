@@ -48,7 +48,8 @@ class Controller_Company extends Controller_Template {
 	{
         $this->template->content = View::factory('company/createcompany')
             ->bind('message', $message)
-			->bind('errors', $errors);
+			->bind('errors', $errors)
+			->bind('company', $company);
 		
 		// If user have permission to create company
 		if (!Auth::instance()->logged_in('company'))
@@ -58,10 +59,61 @@ class Controller_Company extends Controller_Template {
 			return;
 		}
 		
+		$company = ORM::factory('company');
+		$this->save_company($company, $message, $errors);
+	} 
+	
+	public function action_edit()
+	{
+        $this->template->content = View::factory('company/edit')
+            ->bind('message', $message)
+			->bind('errors', $errors)
+			->bind('company', $company);
+		
+		// If user have permission to create company
+		if (!Auth::instance()->logged_in('company'))
+		{
+			// Redirect to step 1
+			Request::current()->redirect('company/create');
+			return;
+		}
+		
+		// If this company belong to this user
+		$company = ORM::factory('company')
+					->where('user_id', '=', $this->user->id)
+					->where('id', '=', $this->request->param('id'))
+					->find();
+		
+		if (!$company->loaded())
+		{
+			throw new HTTP_Exception_404(__('Company id :id not found', array(':id' => $this->request->param('id'))));
+		}
+		
+		$this->save_company($company, $message, $errors);
+	}
+
+	public function action_view()
+	{
+        $this->template->content = View::factory('company/view')
+            ->bind('company', $company);
+		
+		$company = ORM::factory('company', $this->request->param('id'));
+
+		if (!$company->loaded())
+		{
+			throw new HTTP_Exception_404(__('Company id :id not found', array(':id' => 10)));
+		}
+	}
+	
+	private function save_company($company, &$message, &$errors)
+	{
 		if (HTTP_Request::POST == $this->request->method()) 
 		{
-			$company = ORM::factory('company')
-            		->values($_POST, array('name', 'objective', 'address', 'detail', 'email', 'website'));
+			$company->name = Arr::get($_POST, 'name');
+			$company->objective = Arr::get($_POST, 'objective');
+			$company->address = Arr::get($_POST, 'address');
+			$company->detail = Arr::get($_POST, 'detail');
+			$company->website = Arr::get($_POST, 'website');			
 			
 			$company->user = $this->user;
 			$company->company_type = ORM::factory('company_type', 1);
@@ -82,23 +134,10 @@ class Controller_Company extends Controller_Template {
                  
                 // Set failure message
                 $message = __('There were errors, please see form below.');
-                 
+                
                 // Set errors using custom messages
                 $errors = $e->errors('models');
             }
-		}
-	} 
-
-	public function action_view()
-	{
-        $this->template->content = View::factory('company/view')
-            ->bind('company', $company);
-		
-		$company = ORM::factory('company', $this->request->param('id'));
-
-		if (!$company->loaded())
-		{
-			throw new HTTP_Exception_404(__('Company id :id not found', array(':id' => 10)));
 		}
 	}
 }

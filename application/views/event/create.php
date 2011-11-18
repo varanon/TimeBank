@@ -73,7 +73,10 @@
 
 <script>
 	$(function() {
-		$( "#datepicker" ).datetimepicker();
-		$( "#datepicker2" ).datetimepicker();
-	});
+		$( "#datepicker" ).datetimepicker({
+			dateFormat: 'yy-mm-dd'
+		});
+		$( "#datepicker2" ).datetimepicker({
+			dateFormat: 'yy-mm-dd'
+		});	});
 </script>

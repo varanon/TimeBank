@@ -60,4 +60,16 @@ class Model_Event extends ORM {
             ),
         );
     }
+
+	public function filters()
+	{
+		return array(
+			'open_date' => array(
+				array('trim'),
+			),
+			'end_date' => array(
+				array('trim'),
+			),
+		);
+	}
 } // End User Timebank Model
