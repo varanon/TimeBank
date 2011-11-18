@@ -14,7 +14,7 @@
 }?>
 
 </table> 
-<?= Form::open('company/approve'); ?>
+<?= Form::open('admin/approve'); ?>
 <select name="company_id">
 <?php foreach ($companies as $company) {
 	if ( $company->verify == '0' )
