@@ -34,6 +34,9 @@ class Model_Company extends ORM {
                 array('not_empty'),
 				array('min_length', array(':value', 50)),
             ),
+            'website' => array(
+                array('url'),
+            ),
             'logo' => array(
                 array(array($this, 'check_upload'), array('logo', ':value')),
             ),
