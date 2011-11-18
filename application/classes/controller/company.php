@@ -101,4 +101,37 @@ class Controller_Company extends Controller_Template {
 			throw new HTTP_Exception_404(__('Company id :id not found', array(':id' => 10)));
 		}
 	}
+	
+	public function action_approve()
+	{
+		$this->template->content = View::factory('company/approve')
+			->bind('message', $message);
+			
+		if (HTTP_Request::POST == $this->request->method()) 
+		{
+			$company = ORM::factory('company',$this->request->post('company_id'));
+			if ($company) 
+            {
+				$company->verify = 1;
+				
+				try
+				{
+					$company->save();
+					$message = 'Verified '.$company->name;
+				
+				} catch (ORM_Validation_Exception $e) {
+				
+                // Set failure message
+                $message = $e->getMessage();
+                // Set errors using custom messages
+                $errors = $e->errors('models');
+            }
+			}
+			else
+			{
+				$message = 'Not found';
+			}
+			
+		}
+	}
 }
