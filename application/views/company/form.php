@@ -29,6 +29,7 @@
 </div>
 
 <?= Form::label('logo', 'Company logo'); ?>
+<img src="<?= url::base().'media/upload/'.$company->logo; ?>" />
 <?= Form::file('logo') ?>
 <div class="error">
     <?= Arr::get($errors, 'logo'); ?>

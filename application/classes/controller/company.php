@@ -86,7 +86,7 @@ class Controller_Company extends Controller_Template {
 		
 		if (!$company->loaded())
 		{
-			throw new HTTP_Exception_404(__('Company id :id not found', array(':id' => $this->request->param('id'))));
+			throw new HTTP_Exception_404(__('Company id :id doesn\'t belong to you', array(':id' => $this->request->param('id'))));
 		}
 		
 		$this->save_company($company, $message, $errors);

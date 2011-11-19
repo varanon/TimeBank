@@ -45,10 +45,7 @@ class Model_Company extends ORM {
 	
 	public function check_upload($filename)
     {
-        // Set the default upload directory
-        Upload::$default_directory = DOCROOT.'upload';
-
-        // Validate the file first
+		// Validate the file first
         $validation = Validation::factory($_FILES)
                 ->rules($filename, array(
                     array('not_empty'),
@@ -74,9 +71,6 @@ class Model_Company extends ORM {
 	
 	public function upload($filename)
     {
-        // Set the default upload directory
-        Upload::$default_directory = 'upload';
-
         $picture = Upload::save($_FILES[$filename]);
 		// Resize, sharpen, and save the image
 		Image::factory($picture)

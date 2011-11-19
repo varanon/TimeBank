@@ -58,6 +58,21 @@ class Model_Event extends ORM {
                 array('not_empty'),
                 array('min_length', array(':value', 50)),
             ),
+            'pic_1' => array(
+                array(array($this, 'check_upload'), array('pic_1', ':value')),
+            ),
+            'pic_2' => array(
+                array(array($this, 'check_upload'), array('pic_2', ':value')),
+            ),
+            'pic_3' => array(
+                array(array($this, 'check_upload'), array('pic_3', ':value')),
+            ),
+            'pic_4' => array(
+                array(array($this, 'check_upload'), array('pic_4', ':value')),
+            ),
+            'pic_5' => array(
+                array(array($this, 'check_upload'), array('pic_5', ':value')),
+            ),
         );
     }
 
@@ -72,4 +87,45 @@ class Model_Event extends ORM {
 			),
 		);
 	}
+	
+	public function check_upload($filename)
+    {
+		if (isset($_FILES[$filename]['name']) && $_FILES[$filename]['name'] != '')
+		{
+			// Validate the file first
+			$validation = Validation::factory($_FILES)
+					->rules($filename, array(
+    	                array('Upload::not_empty'),
+						array('Upload::valid'),
+						array('Upload::type', array(':value', array('gif', 'jpg', 'png'))),
+						array('Upload::size', array(':value', '1M')),
+					));
+	
+			// Validate and upload OK
+			if ($validation->check())
+			{
+				$this->upload($filename);
+				
+				return TRUE;
+			}
+			else
+			{
+				//print_r($validation->errors('upload'));
+				return FALSE;
+			}
+		}
+		else
+			return TRUE;
+    }	
+	
+	public function upload($filename)
+    {
+        $picture = Upload::save($_FILES[$filename]);
+		// Resize, sharpen, and save the image
+		Image::factory($picture)
+			->resize(100, 100, Image::INVERSE)
+			->save();
+		$this->$filename = basename($picture);
+    }	
+
 } // End User Timebank Model
