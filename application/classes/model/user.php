@@ -18,7 +18,7 @@ class Model_User extends Model_Auth_User {
 	
 	public function filters()
 	{
-		return parent::filters() + return array(
+		return parent::filters() + array(
 			'birthdate' => array(
 				array('trim'),
 			),
@@ -28,14 +28,15 @@ class Model_User extends Model_Auth_User {
 	public function rules()
     {
         return parent::rules() + array(
-            'birthdate' => array(
-                array('date')
-            ),
+            //'birthdate' => array(
+            //    array('date')
+            //),
 			'first_name' => array(
-                array('min_length', array(':value', 3)),
+                array('min_length', array(':value', 3))
+			),
 			'last_name' => array(
-                array('min_length', array(':value', 3)),
-            )
+                array('min_length', array(':value', 3))
+            ),
             'phone' => array(
                 array('numeric')
             ),
