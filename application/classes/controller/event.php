@@ -81,7 +81,7 @@ class Controller_Event extends Controller_Template {
 		
 		if (!$event->loaded())
 		{
-			throw new HTTP_Exception_404(__('Event id :id not found', array(':id' => 10)));
+			throw new HTTP_Exception_404(__('Event id :id not found', array(':id' => $this->request->param('id'))));
 		}
 	}
 	

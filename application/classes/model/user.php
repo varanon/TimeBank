@@ -28,9 +28,9 @@ class Model_User extends Model_Auth_User {
 	public function rules()
     {
         return parent::rules() + array(
-            //'birthdate' => array(
-            //    array('date')
-            //),
+            'birthdate' => array(
+                array('date')
+            ),
 			'first_name' => array(
                 array('min_length', array(':value', 3))
 			),
