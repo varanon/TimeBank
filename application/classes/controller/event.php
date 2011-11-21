@@ -76,12 +76,53 @@ class Controller_Event extends Controller_Template {
 		
 		$event = ORM::factory('event', $this->request->param('id'));
 
-		$event_status = Kohana::$config->load('timebank')->get('event_status');
-		$locations = Location::get_location_array();
-		
 		if (!$event->loaded())
 		{
 			throw new HTTP_Exception_404(__('Event id :id not found', array(':id' => $this->request->param('id'))));
+		}
+		
+		$event_status = Kohana::$config->load('timebank')->get('event_status');
+		$locations = Location::get_location_array();
+	}
+	
+	public function action_addcomment()
+	{
+		$this->auto_render = false;
+		
+		if (HTTP_Request::POST == $this->request->method()) 
+		{
+			$event = ORM::factory('event', $this->request->param('id'));
+	
+			if (!$event->loaded())
+			{
+				throw new HTTP_Exception_404(__('Event id :id not found', array(':id' => $this->request->param('id'))));
+			}
+
+			$comment = ORM::factory('comment');
+			$comment->type = '2';
+			$comment->comment = Arr::get($_POST, 'comment');
+			$comment->event = $event;
+			$comment->ip = Request::$client_ip;
+			
+			// If this is logged in user, stamp user_id
+			$user = Auth::instance()->get_user();
+			if ($user)
+			{
+				$comment->user = $user;
+			}
+			
+			try
+			{
+				$comment->save();
+                 				
+            } catch (ORM_Validation_Exception $e) {
+                 
+                // Set errors using custom messages
+                $errors = $e->errors('models');
+            }
+
+			// Redirect to event view
+			Request::current()->redirect('event/view/'.$event->id);
 		}
 	}
 	

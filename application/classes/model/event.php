@@ -12,6 +12,10 @@ class Model_Event extends ORM {
 					'company' => array(),
 					'location' => array(),);
 
+	protected $_has_many = array(
+		'comments'       => array('model' => 'comment'),
+	);
+	
 	public function rules()
     {
         return array(
