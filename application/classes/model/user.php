@@ -5,6 +5,7 @@ class Model_User extends Model_Auth_User {
 	protected $_has_many = array(
 		'user_timebanks' => array('model' => 'user_timebank'),
 		'user_tokens' => array('model' => 'user_token'),
+		'comments' => array('model' => 'comment'),
 		'roles'       => array('model' => 'role', 'through' => 'roles_users'),
 		'skills'       => array('model' => 'skill', 'through' => 'users_skills'),
 		'occupations'       => array('model' => 'occupation', 'through' => 'users_occupations'),
@@ -29,9 +30,9 @@ class Model_User extends Model_Auth_User {
 	public function rules()
     {
         return parent::rules() + array(
-            //'birthdate' => array(
-            //    array('date')
-            //),
+            'birthdate' => array(
+                array('date')
+            ),
 			'first_name' => array(
                 array('min_length', array(':value', 3))
 			),

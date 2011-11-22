@@ -15,6 +15,10 @@ class Model_Event extends ORM {
 		'users'		=> array('model' => 'user', 'through' => 'users_events'),
 	);
 
+	protected $_has_many = array(
+		'comments'       => array('model' => 'comment'),
+	);
+	
 	public function rules()
     {
         return array(

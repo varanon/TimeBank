@@ -21,5 +21,22 @@
     <li>Pic 4: <img src="<?= url::base().'media/upload/'.$event->pic_4; ?>" /></li>
     <li>Pic 5: <img src="<?= url::base().'media/upload/'.$event->pic_5; ?>" /></li>
 </ul>
+<<<<<<< HEAD
 <?= Form::submit('apply', 'apply'); ?>
+=======
+
+<h2>Comments</h2>
+<ol>
+<?php foreach($event->comments->find_all() as $comment): ?>
+	<li><?= $comment->user->nickname ? $comment->user->nickname : $comment->ip; ?>, <?= $comment->comment; ?></li>
+<? endforeach ?>
+</ol>
+
+<?= Form::open('event/addcomment/'.$event->id); ?>
+
+<?= Form::label('comment', 'comment'); ?>
+<?= Form::textarea('comment'); ?>
+
+<?= Form::submit('submit', 'Add comment'); ?>
+>>>>>>> a51378d2536b5ffeeb694b1e550ad39b3675b04a
 <?= Form::close(); ?>
