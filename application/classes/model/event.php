@@ -13,10 +13,10 @@ class Model_Event extends ORM {
 					'location' => array(),);
 	protected $_has_many = array(
 		'users'		=> array('model' => 'user', 'through' => 'users_events'),
-		'comments'       => array('model' => 'comment'),
+		'comments'	=> array('model' => 'comment'),
 	);
-
-	
+<<<<<<< .mine
+=======>>>>>>> .theirs	
 	public function rules()
     {
         return array(
