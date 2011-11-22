@@ -13,11 +13,9 @@ class Model_Event extends ORM {
 					'location' => array(),);
 	protected $_has_many = array(
 		'users'		=> array('model' => 'user', 'through' => 'users_events'),
-	);
-
-	protected $_has_many = array(
 		'comments'       => array('model' => 'comment'),
 	);
+
 	
 	public function rules()
     {
@@ -64,6 +62,9 @@ class Model_Event extends ORM {
             'detail' => array(
                 array('not_empty'),
                 array('min_length', array(':value', 50)),
+            ),
+			'temp' => array(
+                array('not_empty'),
             ),
             'pic_1' => array(
                 array(array($this, 'check_upload'), array('pic_1', ':value')),

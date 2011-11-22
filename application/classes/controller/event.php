@@ -91,6 +91,19 @@ class Controller_Event extends Controller_Template {
 		$locations = Location::get_location_array();
 	}
 	
+	public function action_search()
+	{
+		if (HTTP_Request::GET == $this->request->method()) 
+		{
+			$message =  'Search: '.Arr::get($_GET, 'q');
+			$query =  '%'.Arr::get($_GET, 'q').'%';
+			$events = ORM::factory('event')->where('temp', 'like', $query)->find_all();
+			$this->template->content = View::factory('event/search')
+				->bind('message', $message)
+				->bind('events', $events);
+		}
+	}
+	
 	public function action_addcomment()
 	{
 		$this->auto_render = false;
@@ -172,7 +185,8 @@ class Controller_Event extends Controller_Template {
 			$event->time_cost = Arr::get($_POST, 'time_cost');			
 			$event->detail = Arr::get($_POST, 'detail');			
 			$event->location_id = Arr::get($_POST, 'location_id');			
-
+			$location = ORM::factory('location',$event->location_id)->province;
+			$event->temp = $event->name.'/'.$event->phone.'/'.$event->contractor_name.'/'.$event->detail.'/'.$location;
 			$event->company = ORM::factory('company')
 								->where('user_id', '=', $this->user->id)
 								->find();

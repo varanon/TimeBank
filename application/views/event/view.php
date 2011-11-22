@@ -1,5 +1,5 @@
 <h2>Info for event "<?= $event->name; ?>"</h2>
-	<?= Form::open('event/apply'); ?> 
+<?= Form::open('event/apply'); ?> 
 <ul>
 	<input type="hidden" name="event_id"  value="<?= $event->id ?>" />
     <li>Name: <?= $event->name; ?></li>

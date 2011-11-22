@@ -1,9 +1,9 @@
- <h1> Event Page </h1>
-<?= Form::open('event/search', array('method' => 'get')); ?> 
-<?= Form::input('q'); ?>
-<?= Form::submit('', 'search'); ?>
-<br />
-<br />
+<? if ($message) : ?>
+    <h3 class="message">
+        <?= $message; ?>
+    </h3>
+<? endif; ?>
+
  <table border="1">
   <tr>
 	<th>name</th>
