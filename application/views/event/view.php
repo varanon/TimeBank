@@ -1,6 +1,7 @@
 <h2>Info for event "<?= $event->name; ?>"</h2>
- 
+	<?= Form::open('event/apply'); ?> 
 <ul>
+	<input type="hidden" name="event_id"  value="<?= $event->id ?>" />
     <li>Name: <?= $event->name; ?></li>
     <li>Open date: <?= $event->open_date; ?></li>
     <li>End date: <?= $event->end_date; ?></li>
@@ -20,3 +21,5 @@
     <li>Pic 4: <img src="<?= url::base().'media/upload/'.$event->pic_4; ?>" /></li>
     <li>Pic 5: <img src="<?= url::base().'media/upload/'.$event->pic_5; ?>" /></li>
 </ul>
+<?= Form::submit('apply', 'apply'); ?>
+<?= Form::close(); ?>

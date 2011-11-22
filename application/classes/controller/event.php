@@ -2,6 +2,12 @@
  
 class Controller_Event extends Controller_Template {
 	
+	public function action_index()
+	{
+		$events = ORM::factory('event')->find_all();
+		$this->template->content = View::factory('event/index')->bind('events', $events);
+	}
+	
 	public function action_create()
 	{
         $this->template->content = View::factory('event/create')
@@ -82,6 +88,32 @@ class Controller_Event extends Controller_Template {
 		if (!$event->loaded())
 		{
 			throw new HTTP_Exception_404(__('Event id :id not found', array(':id' => 10)));
+		}
+	}
+	
+	public function action_apply()
+	{
+		if (HTTP_Request::POST == $this->request->method()) 
+		{
+			$message = 'Not user!';
+			if ($this->user)
+			{
+				try
+				{
+					$user = ORM::factory('user', $this->user->id);
+					$user->add('events', ORM::factory('event', $this->request->post('event_id')));
+					$user->save();
+					$message = 'Done!';
+				} catch (ORM_Validation_Exception $e) {
+				
+					// Set failure message
+					$message = $e->getMessage();
+					// Set errors using custom messages
+					$errors = $e->errors('user');
+				}
+			}
+			$this->template->content = View::factory('event/apply')
+				->bind('message', $message);
 		}
 	}
 	

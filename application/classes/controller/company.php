@@ -4,7 +4,7 @@ class Controller_Company extends Controller_Template {
 	
 	public function action_index()
 	{
-        $this->template->content = View::factory('company/index');
+		$this->template->content = View::factory('company/index');
 	}
 	
 	public function action_create()

@@ -11,6 +11,9 @@ class Model_Event extends ORM {
 	protected $_belongs_to = array(
 					'company' => array(),
 					'location' => array(),);
+	protected $_has_many = array(
+		'users'		=> array('model' => 'user', 'through' => 'users_events'),
+	);
 
 	public function rules()
     {

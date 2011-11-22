@@ -10,6 +10,7 @@ class Model_User extends Model_Auth_User {
 		'occupations'       => array('model' => 'occupation', 'through' => 'users_occupations'),
 		'locations'       => array('model' => 'location', 'through' => 'users_locations'),
 		'activities'       => array('model' => 'activity', 'through' => 'users_activities'),
+		'events'		=> array('model' => 'event', 'through' => 'users_events'),
 	);
 	
 	protected $_has_one = array(

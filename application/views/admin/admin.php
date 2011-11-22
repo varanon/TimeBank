@@ -1,17 +1,17 @@
 ﻿ <h1> Admin Page </h1>
  <table border="1">
   <tr>
-    <th>name</th>
-    <th>detail</th>
+	<th>name</th>
+	<th>detail</th>
 	<th>verify</th>
   </tr>
-<?php foreach ($companies as $company) {
-	echo '<tr>';
-    echo '<td>'.$company->name.'</td>';
-	echo '<td>'.$company->detail.'</td>';
-	echo '<td>'.$company->verify.'</td>';
-	echo '</tr>';
-}?>
+<?php foreach ($companies as $company):?>
+	<tr>
+	<td><?= $company->name ?></td>
+	<td><?= $company->detail ?></td>
+	<td><?=  $company->verify ?></td>
+	</tr>
+<? endforeach ?>
 
 </table> 
 <?= Form::open('admin/approve'); ?>
