@@ -13,6 +13,65 @@ class Controller_User extends Controller_Template {
 			return;
         }
     }
+
+    public function action_record()
+    {
+        // if a user is not logged in, redirect to login page
+        if (!$this->user)
+        {
+            Request::current()->redirect('user/login');
+			return;
+        }
+		
+		$records = ORM::factory('user_timebank')->where('user_id', '=', $this->user->id)->find_all();
+		
+		$total_hour = 0;
+		foreach ($records as $record)
+		{
+			$total_hour += $record->hour;
+		}
+
+		$this->template->content = View::factory('user/record')
+								->bind('records', $records)
+								->bind('errors', $errors)
+								->bind('total_hour', $total_hour);
+    }
+	
+	public function action_addhour()
+	{
+        // if a user is not logged in, redirect to login page
+        if (!$this->user)
+        {
+            Request::current()->redirect('user/login');
+			return;
+        }
+				
+        if (HTTP_Request::POST == $this->request->method()) 
+        {           
+            try {
+         
+               	// Create an timebank and attach it to the user (one-to-many)
+				$timebank = ORM::factory('user_timebank')->values(array(
+					'hour'			=> Arr::get($_POST, 'hour'),
+					'status'  		=> 1,
+					'user_id'		=> $this->user->id, // sets the fk
+				));
+				$timebank->save();
+				
+				Request::current()->redirect('user/record');
+                 
+            } catch (ORM_Validation_Exception $e) {
+                 
+                // Set errors using custom messages
+				$this->template->content = View::factory('user/record')
+					->bind('errors', $errors)
+					->bind('records', $records);
+
+                $errors = $e->errors('models');
+				$records = ORM::factory('user_timebank')->where('user_id', '=', $this->user->id)->find_all();
+            }
+		}	
+	}
 	
     public function action_create() 
     {

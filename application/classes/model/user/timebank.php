@@ -13,11 +13,17 @@ class Model_User_Timebank extends ORM {
 	public function rules()
     {
         return array(
-            'name' => array(
+            'user_id' => array(
                 array('not_empty'),
+                array('numeric'),
             ),
-            'description' => array(
+            'status' => array(
                 array('not_empty'),
+                array('numeric'),
+            ),
+            'hour' => array(
+                array('not_empty'),
+                array('numeric'),
             ),
         );
     }

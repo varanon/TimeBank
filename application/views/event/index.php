@@ -11,7 +11,7 @@
 	<tr>
 	<td><?= $event->name ?></td>
 	<td><?= $event->status ?></td>
-	<td><?=  $event->time_cost ?></td>
+	<td><?= $event->time_cost ?></td>
 	<td><?= HTML::anchor('event/view/'.$event->id, 'show'); ?></td>
 	</tr>
 <? endforeach ?>
