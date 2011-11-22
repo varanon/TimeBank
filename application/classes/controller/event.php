@@ -141,9 +141,8 @@ class Controller_Event extends Controller_Template {
 			{
 				try
 				{
-					$user = ORM::factory('user', $this->user->id);
-					$user->add('events', ORM::factory('event', $this->request->post('event_id')));
-					$user->save();
+					$this->user->add('events', ORM::factory('event', $this->request->post('event_id')));
+					$this->user->save();
 					$message = 'Done!';
 				} catch (ORM_Validation_Exception $e) {
 				
@@ -155,6 +154,20 @@ class Controller_Event extends Controller_Template {
 			}
 			$this->template->content = View::factory('event/apply')
 				->bind('message', $message);
+		}
+	}
+	
+	public function action_test()
+	{
+		$this->auto_render = FALSE;
+		
+		$query = DB::select()->from('users_events')->where('user_id', '=', '3')->where('event_id', '=', '8');
+		$results = $query->execute()->as_array();
+		if (count($results) > 0)
+		{
+			$user_event = $results[0];
+			$query = DB::update('users_events')->set(array('status' => '2'))->where('user_id', '=', '3')->where('event_id', '=', '8');
+			$query->execute();
 		}
 	}
 	

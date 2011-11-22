@@ -152,15 +152,15 @@ class Controller_User extends Controller_Template {
         $this->template->content = View::factory('user/index');
          
         // Load the user information
-        $user = Auth::instance()->get_user();
+		$activity = ORM::factory('activity');
+		$activity->name = "pack sand";
+		$activity->description = "pack description";
+		$activity->save();
 		
-		// if a user is not logged in, redirect to login page
-        if (!$user)
-        {
-            Request::current()->redirect('user/login');
-        }
+		// Attach activity to user (many-to-many)
+		$this->user->add('activities', ORM::factory('activity', array('name' => 'pack sand'), array('test' => 'lnw')));
 	}
-	
+
 	public function snippet()
 	{
 		// Create an timebank and attach it to the user (one-to-many)
